@@ -1,0 +1,40 @@
+# PR labels, which are what `.github/release.yml` groups the release notes by. Keep the two in
+# lockstep: a label with no category there falls into "Other Changes", and a branch type with no
+# label here does the same.
+
+enhancement:
+  - head-branch: ['^task/', '^feat/', '^feature/']
+bug:
+  - head-branch: ['^bug/', '^fix/']
+refactoring:
+  - head-branch: ['^refactor/']
+performance:
+  - head-branch: ['^perf/']
+
+# ── Path fallbacks, for a branch that carried no type ────────────────────────────────────────────
+documentation:
+  - head-branch: ['^docs/']
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'docs/**'
+          - 'README.md'
+          - 'CONTRIBUTING.md'
+          - 'SECURITY.md'
+          - 'CLA.md'
+ci-cd:
+  - head-branch: ['^ci/']
+  - changed-files:
+      - any-glob-to-any-file:
+          - '.github/**'
+          - 'mise.toml'
+          - 'lefthook.yml'
+testing:
+  - head-branch: ['^test/']
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/src/test/**'
+dependencies:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'build.sbt'
+          - 'project/**'

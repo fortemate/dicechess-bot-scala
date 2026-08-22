@@ -1,0 +1,61 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+
+# =============================================================================
+# CodeRabbit Configuration — Dice Chess Bot Scala Starter (Scala 3 / GraalVM Native Image)
+# =============================================================================
+# Minimal, dependency-free reference starter template for Dice Chess webhook bots.
+# =============================================================================
+
+language: en-US
+
+reviews:
+  profile: assertive
+
+  high_level_summary: false
+  poem: false
+  collapse_walkthrough: true
+
+  auto_review:
+    enabled: false
+    drafts: false
+    base_branches:
+      - main
+
+  path_filters:
+    - "!**/target/**"
+    - "!**/project/target/**"
+    - "!**/*.lock"
+
+  tools:
+    actionlint:
+      enabled: true
+    gitleaks:
+      enabled: true
+    shellcheck:
+      enabled: true
+    markdownlint:
+      enabled: true
+
+  path_instructions:
+    - path: "**/*.scala"
+      instructions: |
+        Modern Scala 3 conventions for a minimal Dice Chess starter bot.
+        When reviewing:
+        - No unnecessary dependencies; the template aims to remain minimal and depend only on `com.fortemate:dicechess-bot-runtime`.
+        - Comments explain "Why", not "What"; don't document self-evident methods.
+        - Ensure compatibility with GraalVM Native Image (`--no-fallback`, avoiding unnecessary reflection).
+        - Keep `Strategy.scala` isolated so bot creators can easily swap out the decision algorithm.
+
+    - path: ".github/workflows/**"
+      instructions: |
+        CI/CD for a Scala 3 starter bot compiling to a GraalVM native image on Linux x64.
+        When reviewing:
+        - Prefer pinned action versions.
+        - Ensure GITHUB_TOKEN / packages:read is present where `dicechess-bot-runtime` is resolved.
+
+    - path: "build.sbt"
+      instructions: |
+        SBT build for a Scala 3 GraalVM Native Image bot.
+        When reviewing:
+        - Keep library versions consistent and compatible with Scala 3.8.4.
+        - Verify the GitHub Packages resolver/credentials stay free of network calls at load time.
