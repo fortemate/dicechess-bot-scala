@@ -1,6 +1,6 @@
 ThisBuild / organization := "com.fortemate"
 ThisBuild / version      := "0.1.0-SNAPSHOT"
-ThisBuild / scalaVersion := "3.8.4"
+ThisBuild / scalaVersion := "3.9.0"
 
 ThisBuild / description := "Minimal Dice Chess webhook bot in Scala: no engine, no dependencies beyond the shared webhook runtime — picks a random legal turn from the server's own enumeration. Compiled to a GraalVM native image for Azure Functions."
 
