@@ -2,8 +2,8 @@ package dicechess.bot
 
 import com.fortemate.dicechess.runtime.TurnContext
 
+import java.security.SecureRandom
 import scala.jdk.CollectionConverters.*
-import scala.util.Random
 
 /** The move-choosing brain: picks uniformly at random from the server's own legal-turn enumeration (`ctx.legalMoves`) —
   * no engine, no DFEN parsing. This is the entire point of this template: swap this one method for your own algorithm,
@@ -16,7 +16,9 @@ import scala.util.Random
   */
 object Strategy:
 
+  private val rng = new SecureRandom()
+
   def chooseMoves(ctx: TurnContext): List[String] =
     Option(ctx.legalMoves).map(_.asScala.toList).filter(_.nonEmpty) match
-      case Some(paths) => paths(Random.nextInt(paths.size)).asScala.toList
+      case Some(paths) => paths(rng.nextInt(paths.size)).asScala.toList
       case None        => Nil
