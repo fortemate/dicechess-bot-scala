@@ -16,7 +16,7 @@ jobs:
             const branch = context.payload.pull_request.head.ref;
             const body = context.payload.pull_request.body || '';
             const branchPattern = /^(feat|fix|bug|task|refactor|chore|docs|ci|test|perf|feature)\/(issue-)?(\d+)-.+$/;
-            const nonIssuePattern = /^(feat|fix|bug|task|refactor|chore|docs|ci|test|perf|feature)\/.+$/;
+            const nonIssuePattern = /^(feat|fix|bug|task|refactor|chore|docs|ci|test|perf|feature)\/.+|^bump-.+$/;
 
             if (!nonIssuePattern.test(branch)) {
               core.setFailed(`Branch name "${branch}" does not match required format: <type>/<short-desc> or <type>/<id>-<short-desc>`);
