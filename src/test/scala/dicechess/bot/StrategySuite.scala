@@ -9,7 +9,7 @@ class StrategySuite extends munit.FunSuite:
   private def context(legalMoves: List[List[String]]): TurnContext =
     val javaMoves = if legalMoves == null then null else legalMoves.map(_.asJava).asJava
     // null clock (untimed): Strategy only ever reads legalMoves, so the clock is irrelevant here.
-    new TurnContext("g1", "irrelevant-dfen", null, javaMoves)
+    new TurnContext("g1", "White", 1L, "irrelevant-dfen", null, javaMoves, false)
 
   test("picks one of the legal turns"):
     val paths  = List(List("e2e4"), List("d2d4"), List("g1f3"))
