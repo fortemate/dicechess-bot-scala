@@ -27,7 +27,7 @@ ThisBuild / credentials ++= (for {
 } yield Credentials("GitHub Package Registry", "maven.pkg.github.com", user, token)).toSeq
 
 val DiceChessBotRuntimeVersion = "1.0.1"
-val MunitVersion               = "1.3.5"
+val MunitVersion               = "1.3.6"
 
 lazy val root = (project in file("."))
   .enablePlugins(NativeImagePlugin)
