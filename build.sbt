@@ -26,7 +26,7 @@ ThisBuild / credentials ++= (for {
   user = sys.env.get("GITHUB_ACTOR").filter(_.nonEmpty).getOrElse("git")
 } yield Credentials("GitHub Package Registry", "maven.pkg.github.com", user, token)).toSeq
 
-val DiceChessBotRuntimeVersion = "1.0.1"
+val DiceChessBotRuntimeVersion = "2.0.0"
 val MunitVersion               = "1.3.6"
 
 lazy val root = (project in file("."))
