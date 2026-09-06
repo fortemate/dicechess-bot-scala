@@ -26,3 +26,13 @@ class StrategySuite extends munit.FunSuite:
     val paths = List(List("a"), List("b"))
     val seen  = (1 to 50).map(_ => Strategy.chooseMoves(context(paths))).toSet
     assertEquals(seen, paths.toSet)
+
+  test("legalMoves containing exactly one empty path plays nothing"):
+    val paths = List(List.empty[String])
+    assertEquals(Strategy.chooseMoves(context(paths)), Nil)
+
+  test("legalMoves with a single non-empty path consistently returns that path"):
+    val path  = List("e2e4")
+    val paths = List(path)
+    (1 to 20).foreach: _ =>
+      assertEquals(Strategy.chooseMoves(context(paths)), path)
