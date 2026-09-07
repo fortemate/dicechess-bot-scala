@@ -3,7 +3,6 @@ package dicechess.bot
 import com.sun.net.httpserver.HttpServer
 import com.fortemate.dicechess.runtime.{CustomHandlerServer, TurnContext, WebhookHandler}
 
-import java.util.function.Function as JFunction
 import scala.jdk.CollectionConverters.*
 
 /** The Azure Functions custom-handler process. All webhook/HTTP-server plumbing — HMAC verification, the ownership
@@ -27,16 +26,14 @@ object Main:
       System.err.println("[bot] DICECHESS_WEBHOOK_SECRET is not set — only the verification handshake will succeed")
     val baseUrl = sys.env.getOrElse("PLAY_API_BASE_URL", DefaultPlayApiBaseUrl)
 
-    val server = CustomHandlerServer.startFromEnvironment(new WebhookHandler(secret, baseUrl, adapt))
+    val server = CustomHandlerServer.startFromEnvironment(new WebhookHandler(secret, baseUrl, adaptStrategy))
     println(s"[bot] random-move custom handler listening on :${server.getAddress.getPort}")
     Thread.currentThread().join() // serve until the host stops the process
 
   /** Start the server (exposed for the end-to-end test; port 0 = ephemeral). */
   def start(port: Int, secret: String, playApiBaseUrl: String = DefaultPlayApiBaseUrl): HttpServer =
-    CustomHandlerServer.start(port, "/api/webhook", new WebhookHandler(secret, playApiBaseUrl, adapt))
+    CustomHandlerServer.start(port, "/api/webhook", new WebhookHandler(secret, playApiBaseUrl, adaptStrategy))
 
-  /** `dicechess-bot-runtime`'s strategy shape is a plain `java.util.function.Function` — a Scala lambda converts to it
-    * via SAM automatically, so this adapter is the entire cost of reusing the library from a Scala bot.
-    */
-  private def adapt: JFunction[TurnContext, java.util.List[String]] =
-    (ctx: TurnContext) => Strategy.chooseMoves(ctx).asJava
+  /** Adapts `Strategy.chooseMoves` into `dicechess-bot-runtime`'s `BotStrategy` interface. */
+  private def adaptStrategy: com.fortemate.dicechess.runtime.BotStrategy =
+    (ctx: TurnContext) => new com.fortemate.dicechess.runtime.TurnAction(Strategy.chooseMoves(ctx).asJava)
