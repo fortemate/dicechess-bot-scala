@@ -97,8 +97,9 @@ curl -X POST "$BASE/bot/webhook" -H "Authorization: Bearer <token>" \
   -d '{"url":"https://<app-name>.azurewebsites.net/api/webhook"}'
 
 # 3. Give the handler its secret (Azure restarts the app automatically). PLAY_API_BASE_URL is
-#    optional — it already defaults to the production platform (see Main.scala) — set it only
-#    to point at a different play-api.
+#    optional — it defaults to https://api.fortemate.com (see Main.scala), so fallback move
+#    fetching always happens when inline legal moves are null. Set it only to point at a
+#    different play-api.
 az functionapp config appsettings set --name <app-name> --resource-group <rg> \
   --settings DICECHESS_WEBHOOK_SECRET=<secret>
 

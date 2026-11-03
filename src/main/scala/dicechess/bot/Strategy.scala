@@ -9,10 +9,10 @@ import scala.jdk.CollectionConverters.*
   * no engine, no DFEN parsing. This is the entire point of this template: swap this one method for your own algorithm,
   * keeping `Main.scala` untouched.
   *
-  * A `null` `legalMoves` (the rare turn whose tree exceeded the server's inline cap, and no `PLAY_API_BASE_URL`
-  * fallback resolved it — see `Main`) or an empty one (a genuine auto-pass) both mean "nothing to play here": `Nil`,
-  * same as the engine-linked [[https://github.com/fortemate/dicechess-bot-azure dicechess-bot-azure]] does for an
-  * unplayable roll. Answering nothing plays nothing — correct and harmless; the clock decides.
+  * An empty `legalMoves` represents a genuine auto-pass (no legal moves available), which produces `Nil`, same as the
+  * engine-linked [[https://github.com/fortemate/dicechess-bot-azure dicechess-bot-azure]] does for an unplayable roll.
+  * A `null` `legalMoves` (if the tree could not be resolved from inline delivery or fallback) also safely falls back to
+  * `Nil`.
   */
 object Strategy:
 
