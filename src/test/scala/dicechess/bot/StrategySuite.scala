@@ -16,7 +16,7 @@ class StrategySuite extends munit.FunSuite:
     val chosen = Strategy.chooseMoves(context(paths))
     assert(paths.contains(chosen), s"$chosen must be one of $paths")
 
-  test("a null legalMoves (capped tree, no fallback resolved it) plays nothing"):
+  test("a null legalMoves (unresolved tree) plays nothing"):
     assertEquals(Strategy.chooseMoves(context(null)), Nil)
 
   test("an empty legalMoves (genuine auto-pass) plays nothing"):

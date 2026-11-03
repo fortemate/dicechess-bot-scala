@@ -13,12 +13,13 @@ import scala.jdk.CollectionConverters.*
   * Configuration (App Settings on Azure, plain env vars locally):
   *   - `DICECHESS_WEBHOOK_SECRET` — the per-bot signing key from webhook registration. Absent, only the registration
   *     handshake succeeds (deliberate: registration happens before the secret exists — deploy → register → set secret).
-  *   - `PLAY_API_BASE_URL` — used only on the rare turn whose legal-move tree exceeded the server's inline cap, to
-  *     fetch the public, unauthenticated `GET /games/{id}/moves` fallback. Defaults to the production platform.
+  *   - `PLAY_API_BASE_URL` — optional. Base URL used when resolving legal moves from the public, unauthenticated
+  *     `GET /games/{id}/moves` endpoint (e.g. when inline legal moves are null). Defaults to
+  *     `https://api.fortemate.com`.
   */
 object Main:
 
-  private val DefaultPlayApiBaseUrl = "https://api.fortemate.com"
+  val DefaultPlayApiBaseUrl = "https://api.fortemate.com"
 
   def main(args: Array[String]): Unit =
     val secret = sys.env.getOrElse("DICECHESS_WEBHOOK_SECRET", "")
